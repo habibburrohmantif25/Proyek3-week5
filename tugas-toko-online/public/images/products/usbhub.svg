@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="180" viewBox="0 0 240 180">
+  <rect width="240" height="180" fill="#f7fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <circle cx="120" cy="75" r="45" fill="#3182ce" opacity="0.9"/>
+  <text x="120" y="82" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">usbhub</text>
+  <text x="120" y="150" font-family="Arial, sans-serif" font-size="13" fill="#4a5568" text-anchor="middle">USB Hub Type-C</text>
+</svg>
