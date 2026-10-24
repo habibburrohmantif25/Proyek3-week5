@@ -8,6 +8,27 @@
 </head>
 
 <body>
+    <div style="background: #f1f5f9; padding: 0.75rem 1rem; margin-bottom: 1.5rem; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            @auth
+                Masuk sebagai: <strong>{{ Auth::user()->nama_lengkap ?? Auth::user()->username }}</strong> (Role: <span style="font-weight: 600;">{{ Auth::user()->role }}</span>)
+            @else
+                Status: <em>Tamu (Belum login)</em>
+            @endauth
+        </div>
+        <div>
+            @auth
+                <a href="{{ route('dashboard') }}" style="margin-right: 1rem; color: #2563eb; text-decoration: none;">Dashboard</a>
+                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" style="cursor: pointer; padding: 0.25rem 0.5rem;">Keluar</button>
+                </form>
+            @else
+                <a href="{{ route('login') }}" style="color: #2563eb; text-decoration: none; font-weight: 600;">Masuk Akun</a>
+            @endauth
+        </div>
+    </div>
+
     <h1>Toko Online</h1>
     <h2>Daftar Produk</h2>
     <button onclick="add(1)">Buku Tulis - Rp5.000</button>
@@ -33,8 +54,16 @@
                 },
                 body: JSON.stringify(payload)
             });
-            const data = await response.json();
-            if (!response.ok) throw new Error(JSON.stringify(data));
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                const errorInfo = {
+                    status: response.status,
+                    statusText: response.statusText,
+                    response: data
+                };
+                document.getElementById('response').textContent = JSON.stringify(errorInfo, null, 2);
+                throw new Error(`HTTP ${response.status}: ${data.message || response.statusText}`);
+            }
             return data;
         }
         async function add(id) {
